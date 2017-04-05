@@ -2,7 +2,7 @@ import socket
 import binascii
 import struct
 import thirdParty_motion
-import thirdPart_lighting
+import thirdParty_lighting
 import traceback
 
 def openConnection(IP, PORT, isReading, outModules):
@@ -13,7 +13,7 @@ def openConnection(IP, PORT, isReading, outModules):
 		OutModules:	TBD, will be used to update fields in the GUI
 
 		Description:
-					
+
 					This function is where the packets are read in and split into their
 					various modules. It will determine the type of packet and begin
 					disecting it into its various modules (depending on what is present).
@@ -27,7 +27,7 @@ def openConnection(IP, PORT, isReading, outModules):
 	sock.bind((UDP_IP, UDP_PORT))
 
 	count = 1
-	data = 1 
+	data = 1
 	addr = 1
 
 	# So long as the signal is set, then we will continue to listen on the given (IP, PORT) socket
@@ -36,7 +36,7 @@ def openConnection(IP, PORT, isReading, outModules):
 		data, addr = sock.recvfrom(65535)
 
 		if(data != None and addr != None):
-			
+
 			# Create the RTTrP header
 			pkt = RTTrP(data)
 
@@ -51,7 +51,7 @@ def openConnection(IP, PORT, isReading, outModules):
 						module = thirdParty_motion.Trackable(pkt.data, pkt.rttrp_head.intHeader, pkt.rttrp_head.fltHeader)
 
 						pkt.trackable = module
-	
+
 						# For each trackable, we need to extract each module. Keep in mind when dealing with LED modules, each
 						# individual LED is considered it's own separate module, so we don't need to worry about
 						# modules within modules, except in the case of a Trackable.
